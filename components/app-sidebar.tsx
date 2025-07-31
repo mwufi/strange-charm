@@ -2,173 +2,176 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  Search,
+  Plus,
+  Globe,
+  FolderOpen,
+  History,
 } from "lucide-react"
+import Link from "next/link"
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Button } from "@/components/ui/button"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+// Sample data for projects and history
+const recentProjects = [
+  {
+    id: "1",
+    name: "Capybara",
+    url: "#",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+  {
+    id: "2", 
+    name: "Desktop AI Chat: Multi-Agent",
+    url: "#",
+  },
+  {
+    id: "3",
+    name: "Create Goal-Setting System",
+    url: "#",
+  },
+]
+
+const chatHistory = [
+  {
+    id: "1",
+    title: "Desktop AI Chat: Multi-Agent",
+    url: "#",
+  },
+  {
+    id: "2",
+    title: "Create Goal-Setting System",
+    url: "#",
+  },
+  {
+    id: "3",
+    title: "E2B Setup & Backend Architecture",
+    url: "#",
+  },
+  {
+    id: "4",
+    title: "Build Gemini-powered coding assistant",
+    url: "#",
+  },
+  {
+    id: "5",
+    title: "Subagent Book Responses: CSV processing",
+    url: "#",
+  },
+  {
+    id: "6",
+    title: "Create Space Shooter Game",
+    url: "#",
+  },
+  {
+    id: "7",
+    title: "Scout capabilities inquiry",
+    url: "#",
+  },
+]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+      <SidebarHeader className="p-4">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-xl">
+          <div className="w-8 h-8 rounded-md bg-black flex items-center justify-center">
+            <span className="text-white text-sm">⚡</span>
+          </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* Search */}
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton className="w-full justify-start text-muted-foreground">
+                <Search className="h-4 w-4" />
+                <span>Search</span>
+                <span className="ml-auto text-xs bg-muted px-2 py-0.5 rounded">⌘K</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* New Chat */}
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <Plus className="h-4 w-4" />
+                <span>New chat</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* Agents */}
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <Globe className="h-4 w-4" />
+                <span>Agents</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* Projects */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          <SidebarMenu>
+            {recentProjects.map((project) => (
+              <SidebarMenuItem key={project.id}>
+                <SidebarMenuButton asChild>
+                  <Link href={project.url}>
+                    <span>{project.name}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/projects" className="text-muted-foreground">
+                  <span>See all</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* History */}
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>History</SidebarGroupLabel>
+          <SidebarMenu>
+            {chatHistory.map((chat) => (
+              <SidebarMenuItem key={chat.id}>
+                <SidebarMenuButton asChild>
+                  <Link href={chat.url}>
+                    <span className="truncate">{chat.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+            <SidebarMenuItem>
+              <SidebarMenuButton className="text-muted-foreground">
+                <span>Show more</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
