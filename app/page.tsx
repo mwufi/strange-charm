@@ -3,10 +3,9 @@
 import { useState, useEffect } from 'react'
 import { Theme, Box, Container } from '@radix-ui/themes'
 import BlurredBackground from '@/components/BlurredBackground'
-import { Input } from '@/components/ui/input'
+import { ChatInput } from '@/components/chat/ChatInput'
 
 export default function Home() {
-  const [query, setQuery] = useState('')
   const [bgSettings, setBgSettings] = useState({
     pattern: 'waves' as 'waves' | 'circles' | 'gradient',
     color: '#3B82F6',
@@ -20,19 +19,26 @@ export default function Home() {
     }
   }, [])
 
+  const handleSubmit = (message: string, options?: any) => {
+    console.log('Message:', message)
+    console.log('Options:', options)
+  }
+
   return (
     <Theme>
       <BlurredBackground {...bgSettings} />
-      <div className="relative min-h-screen flex items-center justify-center">
-        <Container size="1" className="px-4">
-          <Box className="text-center">
-            <h1 className="text-4xl font-semibold mb-8 text-gray-800">
+      <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
+        <Container size="3" className="w-full max-w-4xl">
+          <Box className="text-center mb-8">
+            <h1 className="text-4xl font-semibold text-gray-800">
               Ask anything...
             </h1>
-            <div className="max-w-2xl mx-auto">
-              <Input placeholder="Ask anything..." />
-            </div>
           </Box>
+          <ChatInput 
+            onSubmit={handleSubmit}
+            placeholder="Ask anything..."
+            className="w-full"
+          />
         </Container>
       </div>
     </Theme>
