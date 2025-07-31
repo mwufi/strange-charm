@@ -135,8 +135,8 @@
   border-right: 1px solid hsl(var(--border) / 0.5);
 }
 
-/* Icon sizing in collapsed state */
-.group-data-[collapsible=icon] [data-sidebar="menu-button"] svg {
+/* Icon sizing */
+[data-sidebar="menu-button"] svg {
   width: 18px;
   height: 18px;
 }
@@ -148,6 +148,30 @@
 
 [data-sidebar="sidebar"] {
   transition: width 0.2s ease;
+}
+
+/* Sub menu button hover states */
+[data-sidebar="menu-sub-button"]:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+/* Hide chevron by default, show on hover for collapsible items */
+.group-hover\/menu-item\:block {
+  display: none;
+}
+.group-hover\/menu-item\:hidden {
+  display: block;
+}
+.group\/menu-item:hover .group-hover\/menu-item\:block {
+  display: block;
+}
+.group\/menu-item:hover .group-hover\/menu-item\:hidden {
+  display: none;
+}
+
+/* Ensure sub-items have proper spacing */
+[data-sidebar="menu-sub"] {
+  margin-top: 0.25rem;
 }
 
 /* Search button specific styles */

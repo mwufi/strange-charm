@@ -27,8 +27,7 @@ import { TeamSwitcher } from "@/components/team-switcher"
 import { SidebarSearch } from "@/components/sidebar-search"
 import { NavSimple } from "@/components/nav-simple"
 import { SidebarFooterContent } from "@/components/sidebar-footer"
-import { NavCollapsible } from "@/components/nav-collapsible"
-import { NavHistory } from "@/components/nav-history"
+import { NavCollapsibleMenu } from "@/components/nav-collapsible-menu"
 import {
   Sidebar,
   SidebarContent,
@@ -262,15 +261,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarSearch />
         </SidebarGroup>
         <NavSimple items={data.navTop} />
-        <NavCollapsible
+        <NavCollapsibleMenu
           title="Projects"
           url="/projects"
           icon={FolderOpen}
-          items={data.projectItems}
+          items={data.projectItems.map(item => ({
+            ...item,
+            title: item.title,
+            url: item.url
+          }))}
           defaultOpen={true}
           showAddButton={true}
         />
-        <NavHistory items={data.historyItems} />
+        <NavCollapsibleMenu
+          title="History"
+          url="/history"
+          icon={Clock}
+          items={data.historyItems.map(item => ({
+            ...item,
+            title: item.title,
+            url: item.url
+          }))}
+          defaultOpen={false}
+        />
       </SidebarContent>
       <SidebarFooter>
         <SidebarFooterContent user={data.user} />

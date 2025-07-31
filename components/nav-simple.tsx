@@ -26,15 +26,11 @@ export function NavSimple({
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild isActive={pathname === item.url}>
+          <SidebarMenuItem key={item.title} className="group/menu-item">
+            <SidebarMenuButton asChild isActive={pathname === item.url} tooltip={item.title}>
               <Link href={item.url}>
-                {item.icon && (
-                  <div className="flex items-center justify-center size-6">
-                    <item.icon className="size-[18px]" strokeWidth={2} />
-                  </div>
-                )}
-                <span className="flex-1">{item.title}</span>
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
