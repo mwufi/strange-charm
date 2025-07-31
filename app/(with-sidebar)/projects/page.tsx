@@ -17,7 +17,7 @@ import {
 const projects = [
   {
     id: "1",
-    name: "Capybara",
+    name: "Ara",
     description: "AI-powered code assistant with advanced features",
     lastUpdated: "2 hours ago",
     collaborators: 3,

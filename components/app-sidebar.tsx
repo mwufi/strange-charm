@@ -7,6 +7,8 @@ import {
   Globe,
   FolderOpen,
   History,
+  Minus,
+  ChevronRight,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -19,26 +21,34 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { Button } from "@/components/ui/button"
 
 // Sample data for projects and history
 const recentProjects = [
   {
     id: "1",
-    name: "Capybara",
-    url: "#",
+    name: "Ara",
+    url: "/projects/1",
   },
   {
     id: "2", 
     name: "Desktop AI Chat: Multi-Agent",
-    url: "#",
+    url: "/projects/2",
   },
   {
     id: "3",
     name: "Create Goal-Setting System",
-    url: "#",
+    url: "/projects/3",
   },
 ]
 
@@ -46,37 +56,37 @@ const chatHistory = [
   {
     id: "1",
     title: "Desktop AI Chat: Multi-Agent",
-    url: "#",
+    url: "/chat/1",
   },
   {
     id: "2",
     title: "Create Goal-Setting System",
-    url: "#",
+    url: "/chat/2",
   },
   {
     id: "3",
     title: "E2B Setup & Backend Architecture",
-    url: "#",
+    url: "/chat/3",
   },
   {
     id: "4",
     title: "Build Gemini-powered coding assistant",
-    url: "#",
+    url: "/chat/4",
   },
   {
     id: "5",
     title: "Subagent Book Responses: CSV processing",
-    url: "#",
+    url: "/chat/5",
   },
   {
     id: "6",
     title: "Create Space Shooter Game",
-    url: "#",
+    url: "/chat/6",
   },
   {
     id: "7",
     title: "Scout capabilities inquiry",
-    url: "#",
+    url: "/chat/7",
   },
 ]
 
@@ -108,9 +118,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton>
-                <Plus className="h-4 w-4" />
-                <span>New chat</span>
+              <SidebarMenuButton asChild>
+                <Link href="/chat">
+                  <Plus className="h-4 w-4" />
+                  <span>New chat</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -130,45 +142,73 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         {/* Projects */}
         <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
           <SidebarMenu>
-            {recentProjects.map((project) => (
-              <SidebarMenuItem key={project.id}>
-                <SidebarMenuButton asChild>
-                  <Link href={project.url}>
-                    <span>{project.name}</span>
-                  </Link>
-                </SidebarMenuButton>
+            <Collapsible defaultOpen className="group/collapsible">
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton>
+                    <FolderOpen className="h-4 w-4" />
+                    <span>Projects</span>
+                    <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {recentProjects.map((project) => (
+                      <SidebarMenuSubItem key={project.id}>
+                        <SidebarMenuSubButton asChild>
+                          <Link href={project.url}>
+                            <span>{project.name}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <Link href="/projects" className="text-muted-foreground">
+                          <span>See all</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
               </SidebarMenuItem>
-            ))}
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link href="/projects" className="text-muted-foreground">
-                  <span>See all</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            </Collapsible>
           </SidebarMenu>
         </SidebarGroup>
 
         {/* History */}
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-          <SidebarGroupLabel>History</SidebarGroupLabel>
           <SidebarMenu>
-            {chatHistory.map((chat) => (
-              <SidebarMenuItem key={chat.id}>
-                <SidebarMenuButton asChild>
-                  <Link href={chat.url}>
-                    <span className="truncate">{chat.title}</span>
-                  </Link>
-                </SidebarMenuButton>
+            <Collapsible defaultOpen className="group/collapsible">
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton>
+                    <History className="h-4 w-4" />
+                    <span>History</span>
+                    <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {chatHistory.map((chat) => (
+                      <SidebarMenuSubItem key={chat.id}>
+                        <SidebarMenuSubButton asChild>
+                          <Link href={chat.url}>
+                            <span className="truncate">{chat.title}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton className="text-muted-foreground">
+                        <span>Show more</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
               </SidebarMenuItem>
-            ))}
-            <SidebarMenuItem>
-              <SidebarMenuButton className="text-muted-foreground">
-                <span>Show more</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            </Collapsible>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
