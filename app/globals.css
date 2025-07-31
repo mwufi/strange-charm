@@ -139,20 +139,3 @@
 .group\/menu-item:hover .group-hover\/menu-item\:hidden {
   display: none;
 }
-
-/* Ensure sub-items have proper spacing */
-[data-sidebar="menu-sub"] {
-  margin-top: 0.25rem;
-}
-
-/* Time group labels */
-.sticky {
-  position: sticky;
-  background-color: hsl(var(--background));
-}
-
-/* Emoji button styles */
-[data-sidebar="emoji-button"] {
-  font-size: 1rem;
-  line-height: 1;
-}

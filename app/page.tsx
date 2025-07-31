@@ -31,9 +31,23 @@ export default function Home() {
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
         <Container size="3" className="w-full max-w-4xl">
           <Box className="text-center mb-8">
-            <h1 className="text-4xl font-semibold text-gray-800">
+            <h1 className="text-4xl font-semibold text-gray-800 mb-4">
               Ask anything...
             </h1>
+            <div className="flex gap-3 justify-center">
+              <a 
+                href="/chat" 
+                className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Open Chat App →
+              </a>
+              <a 
+                href="/sandbox" 
+                className="inline-flex items-center px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors"
+              >
+                Components Sandbox →
+              </a>
+            </div>
           </Box>
           <ChatInput 
             onSubmit={handleSubmit}
