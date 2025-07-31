@@ -11,6 +11,7 @@ export default function Home() {
     color: '#3B82F6',
     opacity: 0.3
   })
+  const [attachmentPosition, setAttachmentPosition] = useState<'top' | 'bottom'>('top')
 
   useEffect(() => {
     const settings = localStorage.getItem('backgroundSettings')
@@ -38,6 +39,7 @@ export default function Home() {
             onSubmit={handleSubmit}
             placeholder="Ask anything..."
             className="w-full"
+            attachmentPosition={attachmentPosition}
           />
         </Container>
       </div>

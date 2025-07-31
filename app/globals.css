@@ -120,3 +120,65 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom sidebar styles for Grok-like appearance */
+[data-sidebar="menu-button"]:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+[data-sidebar="menu-button"][data-active="true"] {
+  background-color: hsl(var(--muted) / 0.8);
+  font-weight: 500;
+}
+
+[data-sidebar="sidebar"] {
+  border-right: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* Icon sizing in collapsed state */
+.group-data-[collapsible=icon] [data-sidebar="menu-button"] svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Smooth transitions */
+[data-sidebar="menu-button"] {
+  transition: all 0.2s ease;
+}
+
+[data-sidebar="sidebar"] {
+  transition: width 0.2s ease;
+}
+
+/* Search button specific styles */
+[data-sidebar="search-button"] {
+  background-color: hsl(var(--muted) / 0.3);
+  border-color: hsl(var(--border) / 0.5);
+}
+
+[data-sidebar="search-button"]:hover {
+  background-color: hsl(var(--muted) / 0.5);
+  border-color: hsl(var(--border) / 0.7);
+}
+
+/* Sub-item styles */
+[data-sidebar="menu-sub-item"] {
+  position: relative;
+}
+
+/* Hover state for action buttons */
+.group-hover\:sidebar-menu-item\:flex {
+  display: flex !important;
+}
+
+/* Time group labels */
+.sticky {
+  position: sticky;
+  background-color: hsl(var(--background));
+}
+
+/* Emoji button styles */
+[data-sidebar="emoji-button"] {
+  font-size: 1rem;
+  line-height: 1;
+}

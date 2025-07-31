@@ -7,12 +7,14 @@ import { ChatAttachmentButton } from './ChatAttachmentButton'
 import { ChatToggleGroup } from './ChatToggleGroup'
 import { ChatModelSelector } from './ChatModelSelector'
 import { ChatSubmitButton } from './ChatSubmitButton'
+import { AttachedFiles } from './AttachedFiles'
 
 export interface ChatInputProps {
   onSubmit?: (message: string, options?: ChatSubmitOptions) => void
   placeholder?: string
   className?: string
   disabled?: boolean
+  attachmentPosition?: 'top' | 'bottom'
 }
 
 export interface ChatSubmitOptions {
@@ -21,16 +23,22 @@ export interface ChatSubmitOptions {
   attachments?: File[]
 }
 
+interface AttachedFile {
+  id: string
+  file: File
+}
+
 export function ChatInput({
   onSubmit,
   placeholder = "Ask anything...",
   className,
-  disabled = false
+  disabled = false,
+  attachmentPosition = 'bottom'
 }: ChatInputProps) {
   const [message, setMessage] = useState('')
   const [mode, setMode] = useState<'default' | 'deepsearch' | 'think'>('default')
   const [model, setModel] = useState('grok-3')
-  const [attachments, setAttachments] = useState<File[]>([])
+  const [attachments, setAttachments] = useState<AttachedFile[]>([])
 
   const handleSubmit = (e?: FormEvent) => {
     e?.preventDefault()
@@ -39,11 +47,23 @@ export function ChatInput({
     onSubmit?.(message, {
       mode,
       model,
-      attachments
+      attachments: attachments.map(a => a.file)
     })
 
     setMessage('')
     setAttachments([])
+  }
+
+  const handleAttach = (files: File[]) => {
+    const newAttachments = files.map(file => ({
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      file
+    }))
+    setAttachments([...attachments, ...newAttachments])
+  }
+
+  const handleRemoveAttachment = (id: string) => {
+    setAttachments(attachments.filter(a => a.id !== id))
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -71,6 +91,14 @@ export function ChatInput({
         "hover:ring-border/70",
         "focus-within:ring-border"
       )}>
+        {attachmentPosition === 'top' && (
+          <AttachedFiles
+            files={attachments}
+            onRemove={handleRemoveAttachment}
+            position="top"
+          />
+        )}
+
         <div className="relative">
           <ChatTextarea
             value={message}
@@ -82,7 +110,7 @@ export function ChatInput({
 
           <div className="flex items-center gap-2 px-3 pb-3">
             <ChatAttachmentButton
-              onAttach={(files) => setAttachments([...attachments, ...files])}
+              onAttach={handleAttach}
               disabled={disabled}
             />
             
@@ -107,24 +135,12 @@ export function ChatInput({
           </div>
         </div>
 
-        {attachments.length > 0 && (
-          <div className="px-3 pb-2 flex gap-2 flex-wrap">
-            {attachments.map((file, index) => (
-              <div
-                key={index}
-                className="text-xs bg-muted px-2 py-1 rounded-full flex items-center gap-1"
-              >
-                <span className="truncate max-w-[100px]">{file.name}</span>
-                <button
-                  type="button"
-                  onClick={() => setAttachments(attachments.filter((_, i) => i !== index))}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
+        {attachmentPosition === 'bottom' && (
+          <AttachedFiles
+            files={attachments}
+            onRemove={handleRemoveAttachment}
+            position="bottom"
+          />
         )}
       </div>
     </form>
