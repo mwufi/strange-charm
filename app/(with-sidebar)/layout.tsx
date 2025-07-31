@@ -1,26 +1,30 @@
 "use client"
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { usePathname } from "next/navigation"
 
 export default function WithSidebarLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+  const isChatPage = pathname.startsWith('/chat')
+
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full">
-        <AppSidebar />
-        <div className="flex-1 overflow-auto">
-          <div className="flex h-14 items-center border-b px-4">
+      <AppSidebar />
+      <SidebarInset>
+        {!isChatPage && (
+          <header className="flex h-14 items-center border-b px-4">
             <SidebarTrigger />
-          </div>
-          <main className="flex-1">
-            {children}
-          </main>
-        </div>
-      </div>
+          </header>
+        )}
+        <main className={isChatPage ? "h-full" : "flex-1"}>
+          {children}
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   )
 }

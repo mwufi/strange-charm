@@ -132,9 +132,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton>
-                <Globe className="h-4 w-4" />
-                <span>Agents</span>
+              <SidebarMenuButton asChild>
+                <Link href="/agents">
+                  <Globe className="h-4 w-4" />
+                  <span>Agents</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
