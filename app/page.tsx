@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Theme, TextField, Box, Container } from '@radix-ui/themes'
-import '@radix-ui/themes/styles.css'
+import { Theme, Box, Container } from '@radix-ui/themes'
 import BlurredBackground from '@/components/BlurredBackground'
+import { Input } from '@/components/ui/input'
 
 export default function Home() {
   const [query, setQuery] = useState('')
@@ -30,13 +30,7 @@ export default function Home() {
               Ask anything...
             </h1>
             <div className="max-w-2xl mx-auto">
-              <TextField.Root
-                size="3"
-                placeholder="Ask anything..."
-                value={query}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
-                className="w-full"
-              />
+              <Input placeholder="Ask anything..." />
             </div>
           </Box>
         </Container>
