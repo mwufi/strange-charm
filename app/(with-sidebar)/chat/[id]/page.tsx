@@ -177,11 +177,6 @@ export default function ChatDetailPage() {
               onSubmit={handleSubmit}
               placeholder="Continue the conversation..."
               showStatus
-              showControls
-              defaultToggles={{
-                webSearch: false,
-                tools: true
-              }}
             />
           </div>
         </div>

@@ -21,7 +21,7 @@ export default function WithSidebarLayout({
             <SidebarTrigger />
           </header>
         )}
-        <main className={isChatPage ? "h-full" : "flex-1"}>
+        <main className={isChatPage ? "flex-1" : "flex-1"}>
           {children}
         </main>
       </SidebarInset>

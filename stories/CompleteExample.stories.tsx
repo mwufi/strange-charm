@@ -211,7 +211,6 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
           <ChatInput
             placeholder="Ask a follow-up question..."
             showStatus
-            showControls
             onSubmit={(message, mentions, attachments, options) => {
               const newMessage = {
                 id: String(Date.now()),
@@ -278,9 +277,8 @@ export const EmptyState: StoryObj = {
           <ChatInput
             placeholder="Ask anything..."
             showStatus
-            showControls
             onSubmit={(message, mentions, attachments, options) => {
-              console.log('Submitted:', { message, mentions, attachments })
+              console.log('Submitted:', { message, mentions, attachments, options })
             }}
           />
         </div>

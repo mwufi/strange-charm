@@ -161,11 +161,6 @@ export default function ChatPage() {
               onSubmit={handleSubmit}
               placeholder="Type your message..."
               showStatus
-              showControls
-              defaultToggles={{
-                webSearch: false,
-                tools: true
-              }}
             />
           </div>
         </div>
