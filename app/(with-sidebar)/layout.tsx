@@ -21,9 +21,7 @@ export default function WithSidebarLayout({
             <SidebarTrigger />
           </header>
         )}
-        <main className={isChatPage ? "flex-1" : "flex-1"}>
-          {children}
-        </main>
+        {children}
       </SidebarInset>
     </SidebarProvider>
   )
