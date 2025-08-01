@@ -92,7 +92,7 @@ const chatHistory = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2 font-semibold text-xl">
           <div className="w-8 h-8 rounded-md bg-black flex items-center justify-center">

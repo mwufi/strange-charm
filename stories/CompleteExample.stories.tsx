@@ -5,8 +5,8 @@ import { UserMessage } from '../components/chat/UserMessage'
 import { EnhancedChatInput } from '../components/chat/EnhancedChatInput'
 import { FileCard, CodeCard, ActionCard } from '../components/chat/MessageCard'
 import { SearchModal } from '../components/SearchModal'
-import { Button } from '../components/ui/button'
-import { Search } from 'lucide-react'
+import { ChatHeader } from '../components/chat/ChatHeader'
+import { Button } from '@/components/ui/button'
 
 export default {
   title: 'Examples/Complete Chat Interface',
@@ -39,24 +39,17 @@ Here's a comprehensive UserProfile component:`,
 5. Use modern React patterns`,
       },
     ])
-    
+
     const [showSearch, setShowSearch] = useState(false)
-    
+
     return (
       <div className="h-screen flex flex-col bg-background">
         {/* Header */}
-        <div className="border-b px-4 py-2 flex items-center justify-between">
-          <h1 className="text-sm font-medium">React Component Development</h1>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowSearch(true)}
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search (⌘K)
-          </Button>
-        </div>
-        
+        <ChatHeader
+          title="React Component Development"
+          onSearchClick={() => setShowSearch(true)}
+        />
+
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 py-8">
           <div className="max-w-3xl mx-auto space-y-6">
@@ -70,7 +63,7 @@ Here's a comprehensive UserProfile component:`,
                   />
                 )
               }
-              
+
               return (
                 <div key={message.id} className="space-y-4">
                   <AssistantMessage
@@ -79,7 +72,7 @@ Here's a comprehensive UserProfile component:`,
                     reasoning={message.reasoning}
                     showThinking
                   />
-                  
+
                   {message.id === '2' && (
                     <>
                       <CodeCard
@@ -153,13 +146,13 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
   );
 }`}
                       />
-                      
+
                       <div className="space-y-4">
                         <AssistantMessage
                           content={`I've also created a simple usage example to show how to implement this component:`}
                           timestamp={new Date(Date.now() - 1000 * 60 * 3)}
                         />
-                        
+
                         <CodeCard
                           language="typescript"
                           fileName="App.tsx"
@@ -188,13 +181,13 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
   );
 }`}
                         />
-                        
+
                         <FileCard
                           fileName="user-profile-styles.css"
                           fileSize="2.3 KB"
                           fileType="css"
                         />
-                        
+
                         <ActionCard
                           title="What would you like to do next?"
                           actions={[
@@ -212,7 +205,7 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
             })}
           </div>
         </div>
-        
+
         {/* Input */}
         <div className="border-t">
           <EnhancedChatInput
@@ -228,7 +221,7 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
             }}
           />
         </div>
-        
+
         {/* Search Modal */}
         <SearchModal
           open={showSearch}
@@ -245,22 +238,15 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
 export const EmptyState: StoryObj = {
   render: () => {
     const [showSearch, setShowSearch] = useState(false)
-    
+
     return (
       <div className="h-screen flex flex-col bg-background">
         {/* Header */}
-        <div className="border-b px-4 py-2 flex items-center justify-between">
-          <h1 className="text-sm font-medium">New Chat</h1>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowSearch(true)}
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search (⌘K)
-          </Button>
-        </div>
-        
+        <ChatHeader
+          title="New Chat"
+          onSearchClick={() => setShowSearch(true)}
+        />
+
         {/* Empty State */}
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center space-y-4 max-w-md">
@@ -284,7 +270,7 @@ export const EmptyState: StoryObj = {
             </div>
           </div>
         </div>
-        
+
         {/* Input */}
         <div className="border-t">
           <EnhancedChatInput
@@ -294,7 +280,7 @@ export const EmptyState: StoryObj = {
             }}
           />
         </div>
-        
+
         {/* Search Modal */}
         <SearchModal
           open={showSearch}

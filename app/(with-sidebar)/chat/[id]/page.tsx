@@ -3,10 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { ChatHeader } from '@/components/chat/ChatHeader'
 import { 
-  Files, 
-  BellOff, 
-  Share, 
   Copy, 
   ChevronDown,
   AtSign,
@@ -92,45 +91,20 @@ export default function ChatDetailPage() {
     navigator.clipboard.writeText(text)
   }
 
+  const [showSearch, setShowSearch] = useState(false)
+
   return (
-    <div className="flex h-dvh w-full flex-col overflow-hidden">
+    <div className="h-full flex flex-col bg-background overflow-hidden">
       {/* Header */}
-      <div className="sticky top-0 z-20 flex w-full items-center justify-between gap-4 bg-background p-2 transition-[border] border-b">
-        <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-1.5">
-          <h1 className="truncate text-sm font-medium">{chat.title}</h1>
-        </div>
-        <div className="flex items-center gap-1">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="h-8 gap-1.5 px-3 text-foreground/70 hover:bg-accent"
-          >
-            <Files className="h-4 w-4" />
-            <span className="hidden md:block">Files</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="h-8 gap-1.5 px-3 text-foreground/70 hover:bg-accent"
-          >
-            <BellOff className="h-4 w-4" />
-            <span className="hidden md:block">Notifications</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="h-8 gap-1.5 px-3 text-foreground/70 hover:bg-accent"
-          >
-            <Share className="h-4 w-4" />
-            <span className="hidden md:block">Share</span>
-          </Button>
-        </div>
-      </div>
+      <ChatHeader
+        title={chat.title}
+        onSearchClick={() => setShowSearch(true)}
+      />
 
       {/* Messages */}
-      <div className="min-h-0 flex-1 overflow-hidden">
-        <div className="relative h-full w-full overflow-x-hidden overflow-y-auto px-4">
-          <div className="relative mx-auto flex w-full max-w-3xl flex-col gap-6 overflow-hidden px-4 pt-8 pb-16">
+      <ScrollArea className="flex-1">
+        <div className="px-4 py-8">
+          <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((message: Message) => (
               <div key={message.id}>
                 {message.role === 'user' ? (
@@ -200,67 +174,68 @@ export default function ChatDetailPage() {
             <div ref={messagesEndRef} />
           </div>
         </div>
-      </div>
+      </ScrollArea>
 
       {/* Input area */}
-      <div className="sticky bottom-[env(safe-area-inset-bottom)] z-20 px-4">
-        <div className="mx-auto flex max-w-3xl flex-col">
-          <div className="mx-6 flex items-center gap-2 rounded-t-xl border-x border-t bg-input px-3 py-2 text-sm font-medium text-muted-foreground">
-            <div className="size-3 rounded-full bg-primary"></div>
-            Assistant is ready
-          </div>
-          <form 
-            onSubmit={handleSubmit}
-            className="flex w-full flex-col rounded-xl border shadow-xs transition-all"
-          >
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleSubmit(e)
-                }
-              }}
-              placeholder="Continue the conversation..."
-              className="flex h-14 min-h-14 w-full resize-none p-3 transition-all placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-              style={{ scrollbarWidth: 'none', height: '48px !important' }}
-            />
-            <div className="flex items-center justify-between p-3">
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  type="button"
-                  className="h-8 gap-1.5 px-3"
-                >
-                  <AtSign className="h-4 w-4" />
-                  Add context
-                </Button>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 rounded-full text-muted-foreground"
-                  type="button"
-                >
-                  <Upload className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="icon"
-                  className="h-8 w-8 rounded-full"
-                  type="submit"
-                  disabled={!input.trim()}
-                >
-                  <ArrowUp className="h-4 w-4" />
-                </Button>
-              </div>
+      <div className="border-t">
+        <div className="px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="mx-6 flex items-center gap-2 rounded-t-xl border-x border-t bg-input px-3 py-2 text-sm font-medium text-muted-foreground mt-4">
+              <div className="size-3 rounded-full bg-primary"></div>
+              Assistant is ready
             </div>
-          </form>
+            <form 
+              onSubmit={handleSubmit}
+              className="flex w-full flex-col rounded-xl border shadow-xs transition-all mb-4"
+            >
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }
+                }}
+                placeholder="Continue the conversation..."
+                className="flex h-14 min-h-14 w-full resize-none p-3 transition-all placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 bg-transparent"
+                style={{ scrollbarWidth: 'none' }}
+              />
+              <div className="flex items-center justify-between p-3">
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    type="button"
+                    className="h-8 gap-1.5 px-3"
+                  >
+                    <AtSign className="h-4 w-4" />
+                    Add context
+                  </Button>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 rounded-full text-muted-foreground"
+                    type="button"
+                  >
+                    <Upload className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    className="h-8 w-8 rounded-full"
+                    type="submit"
+                    disabled={!input.trim()}
+                  >
+                    <ArrowUp className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="h-4 bg-background"></div>
       </div>
     </div>
   )
