@@ -39,13 +39,19 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  decorators: [
+    (Story) => (
+      <SidebarProvider>
+        <Story />
+      </SidebarProvider>
+    ),
+  ],
 } satisfies Meta
 
 // Basic Sidebar
 export const Basic: StoryObj = {
   render: () => (
-    <SidebarProvider>
-      <div className="flex h-screen">
+    <div className="flex h-screen">
         <Sidebar>
           <SidebarHeader>
             <h2 className="px-4 text-lg font-semibold">My App</h2>
@@ -79,15 +85,13 @@ export const Basic: StoryObj = {
           <p className="text-muted-foreground mt-2">Click the trigger to toggle the sidebar</p>
         </div>
       </div>
-    </SidebarProvider>
   ),
 }
 
 // Sidebar with Groups
 export const WithGroups: StoryObj = {
   render: () => (
-    <SidebarProvider>
-      <div className="flex h-screen">
+    <div className="flex h-screen">
         <Sidebar>
           <SidebarHeader className="p-4">
             <h2 className="text-lg font-semibold">Dashboard</h2>
@@ -134,15 +138,13 @@ export const WithGroups: StoryObj = {
           <SidebarTrigger />
         </div>
       </div>
-    </SidebarProvider>
   ),
 }
 
 // Collapsible Sidebar Groups
 export const CollapsibleGroups: StoryObj = {
   render: () => (
-    <SidebarProvider>
-      <div className="flex h-screen">
+    <div className="flex h-screen">
         <Sidebar>
           <SidebarHeader className="p-4">
             <div className="flex items-center gap-2">
@@ -271,7 +273,6 @@ export const CollapsibleGroups: StoryObj = {
           </div>
         </div>
       </div>
-    </SidebarProvider>
   ),
 }
 
