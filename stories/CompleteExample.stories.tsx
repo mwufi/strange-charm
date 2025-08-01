@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { AssistantMessage } from '../components/chat/AssistantMessage'
 import { UserMessage } from '../components/chat/UserMessage'
-import { EnhancedChatInput } from '../components/chat/EnhancedChatInput'
+import { ChatInput } from '../components/chat/ChatInput'
 import { FileCard, CodeCard, ActionCard } from '../components/chat/MessageCard'
 import { SearchModal } from '../components/SearchModal'
 import { ChatHeader } from '../components/chat/ChatHeader'
@@ -208,9 +208,11 @@ export function UserProfile({ user, onFollow, isFollowing = false }: UserProfile
 
         {/* Input */}
         <div className="border-t">
-          <EnhancedChatInput
+          <ChatInput
             placeholder="Ask a follow-up question..."
-            onSubmit={(message, mentions, attachments) => {
+            showStatus
+            showControls
+            onSubmit={(message, mentions, attachments, options) => {
               const newMessage = {
                 id: String(Date.now()),
                 type: 'user' as const,
@@ -273,9 +275,11 @@ export const EmptyState: StoryObj = {
 
         {/* Input */}
         <div className="border-t">
-          <EnhancedChatInput
+          <ChatInput
             placeholder="Ask anything..."
-            onSubmit={(message, mentions, attachments) => {
+            showStatus
+            showControls
+            onSubmit={(message, mentions, attachments, options) => {
               console.log('Submitted:', { message, mentions, attachments })
             }}
           />

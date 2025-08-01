@@ -4,12 +4,10 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ChatHeader } from '@/components/chat/ChatHeader'
+import { ChatInput } from '@/components/chat/ChatInput'
 import { 
   Copy, 
   ChevronDown,
-  AtSign,
-  Upload,
-  ArrowUp
 } from 'lucide-react'
 import { format } from 'date-fns'
 
@@ -23,9 +21,8 @@ interface Message {
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [showSearch, setShowSearch] = useState(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -35,34 +32,30 @@ export default function ChatPage() {
     scrollToBottom()
   }, [messages])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!input.trim()) return
+  const handleSubmit = async (message: string, mentions: any[], attachments: any[], options?: any) => {
+    if (!message.trim() && attachments.length === 0) return
 
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       role: 'user',
-      content: input,
+      content: message,
       timestamp: new Date()
     }
 
     const assistantMessage: Message = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
-      content: `I understand you're asking about "${input}". Let me help you with that...`,
+      content: `I understand you're asking about "${message}". Let me help you with that...`,
       timestamp: new Date(),
       isStreaming: false
     }
 
     setMessages(prev => [...prev, userMessage, assistantMessage])
-    setInput('')
   }
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
   }
-
-  const [showSearch, setShowSearch] = useState(false)
 
   return (
     <div className="h-full flex flex-col bg-background overflow-hidden">
@@ -164,60 +157,16 @@ export default function ChatPage() {
       <div className="border-t">
         <div className="px-4">
           <div className="mx-auto max-w-3xl">
-            <div className="mx-6 flex items-center gap-2 rounded-t-xl border-x border-t bg-input px-3 py-2 text-sm font-medium text-muted-foreground mt-4">
-              <div className="size-3 rounded-full bg-primary"></div>
-              Assistant is ready
-            </div>
-            <form 
+            <ChatInput
               onSubmit={handleSubmit}
-              className="flex w-full flex-col rounded-xl border shadow-xs transition-all mb-4"
-            >
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    handleSubmit(e)
-                  }
-                }}
-                placeholder="Type your message..."
-                className="flex h-14 min-h-14 w-full resize-none p-3 transition-all placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 bg-transparent"
-                style={{ scrollbarWidth: 'none' }}
-              />
-              <div className="flex items-center justify-between p-3">
-                <div className="flex items-center gap-1">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    type="button"
-                    className="h-8 gap-1.5 px-3"
-                  >
-                    <AtSign className="h-4 w-4" />
-                    Add context
-                  </Button>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 rounded-full text-muted-foreground"
-                    type="button"
-                  >
-                    <Upload className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    className="h-8 w-8 rounded-full"
-                    type="submit"
-                    disabled={!input.trim()}
-                  >
-                    <ArrowUp className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </form>
+              placeholder="Type your message..."
+              showStatus
+              showControls
+              defaultToggles={{
+                webSearch: false,
+                tools: true
+              }}
+            />
           </div>
         </div>
       </div>
