@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ara OS
 
-## Getting Started
+Welcome to **Ara OS** - an open source interface to chat with AI & friends. This is the beginning of a new way to interact with AI assistants and collaborate with others in real-time.
 
-First, run the development server:
+## 🌟 Features
+
+- **AI Chat Interface**: Clean, modern chat interface for conversing with AI assistants
+- **Multi-Agent Support**: Built with extensibility in mind for multiple AI agents
+- **Real-time Collaboration**: Foundation for chatting with friends alongside AI
+- **Beautiful UI Components**: Powered by shadcn/ui with a polished design system
+- **Storybook Integration**: Browse and test UI components in isolation
+
+## 📸 Screenshots
+
+### Chat Interface
+![Chat Interface](docs/screenshot-chat.png)
+
+### Storybook UI Components
+![Storybook](docs/screenshot-storybook.png)
+
+## 🚀 Getting Started
+
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+```
+
+Then, run the development server:
+
+```bash
+bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Storybook
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To explore the UI components in Storybook:
 
-## Learn More
+```bash
+bun run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+This will open Storybook at [http://localhost:6006](http://localhost:6006).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: [Next.js 15](https://nextjs.org) with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com)
+- **Package Manager**: [Bun](https://bun.sh)
+- **Component Development**: [Storybook](https://storybook.js.org)
 
-## Deploy on Vercel
+## 🎨 UI Components
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ara OS includes a comprehensive set of UI components:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Chat Components**: ChatInput, ConversationDisplay, MessageCard, and more
+- **Navigation**: Sidebar with collapsible menu system
+- **Core UI**: Buttons, Cards, Dialogs, Popovers, and other primitives
+- **Animations**: Smooth transitions and fade-in effects
+
+All components are documented and can be explored in Storybook.
+
+## 🛠️ Development
+
+The project structure follows Next.js App Router conventions:
+
+```
+app/
+├── (with-sidebar)/     # Routes with sidebar layout
+│   ├── chat/          # Chat interface
+│   ├── agents/        # Agent management
+│   ├── projects/      # Project views
+│   └── dashboard/     # Dashboard
+components/
+├── chat/              # Chat-specific components
+├── ui/                # Core UI components
+└── ...                # Other shared components
+```
+
+## 🤝 Contributing
+
+Ara OS is open source and welcomes contributions! Whether you're fixing bugs, adding features, or improving documentation, we'd love to have you involved.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+Built with ❤️ by the Ara OS community
